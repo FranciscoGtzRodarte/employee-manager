@@ -40,7 +40,7 @@ db.query(
     });
   }
 );
-
+//get employees names from database
 const managers = ["None"];
 db.query(
   "SELECT employees.first_name, employees.last_name FROM employees;",
@@ -50,7 +50,7 @@ db.query(
     });
   }
 );
-
+//employee manager title ASCII font
 figlet.text(
   "Employee Company",
   {
@@ -207,10 +207,11 @@ function init() {
         });
         setTimeout(init, 500);
         break;
-
+      //add department
       case "Add Department":
         inquirer.prompt(addDepartment).then((data) => {
           //   console.log(data.newDepartment);
+          //add department name into table departments
           db.query(
             `INSERT INTO department (name) VALUES ("${data.newDepartment}");`
           );
@@ -232,8 +233,7 @@ function init() {
         break;
       case "Add Role":
         inquirer.prompt(addRole).then((data) => {
-          //   console.log(data.newDepartment);
-          //console.log(departments.indexOf(data.department));
+          //insert user input in to role table
 
           db.query(
             `INSERT INTO role (title, salary, department_id) VALUES ("${
@@ -252,9 +252,7 @@ function init() {
         break;
       case "Update Employee Role":
         inquirer.prompt(updateRole).then((data) => {
-          //   console.log(data.newDepartment);
-          //console.log(departments.indexOf(data.department));
-
+          //update employee role id
           db.query(
             `UPDATE employees SET role_id=${
               rolesTitle.indexOf(data.roleUpdate) + 1
@@ -269,11 +267,10 @@ function init() {
         });
 
         break;
+      //add employee
       case "Add Employee":
         inquirer.prompt(addEmployee).then((data) => {
-          //   console.log(data.newDepartment);
-          //console.log(departments.indexOf(data.department));
-
+          //if employee manager is equal to none insert null as value else add id manager
           if (data.employeeManager === "None") {
             db.query(
               `INSERT INTO employees (first_name, last_name, role_id, manager_id) VALUES ("${
@@ -303,10 +300,7 @@ function init() {
 
         break;
 
-      //   case "Exit":
-
-      //     break;
-
+      //exit option
       default:
         console.log("\n");
         console.log("\x1b[41m%s\x1b[0m", "Good Bye!");
